@@ -40,7 +40,7 @@ const getFlavor = async (id) => {
 const deleteFlavor = async(id) => {
   try{
     await client.query(`
-      SELECT * FROM flavors
+      DELETE FROM flavors
       WHERE id='${id}';
       `);
   } catch (err){
