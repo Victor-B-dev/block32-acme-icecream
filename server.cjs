@@ -31,7 +31,8 @@ app.get('/api/flavors/:id', async (req, res, next) => {
 app.post('/api/flavors', async (req, res, next) => {
   try {
     const { flavorName, is_favorite } = req.body;
-    const flavor = await createFlavor(flavorName, is_favorite);
+    const { rows: [ flavor ] } = await createFlavor(flavorName, is_favorite);
+    console.log(flavor)
     res.send(flavor);
   } catch (err){
     next(err);
@@ -52,8 +53,8 @@ app.put('/api/flavors/:id', async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const { flavorName, is_favorite } = req.body;
-    const updatedFlav = await updateFlav(id, flavorName, is_favorite);
-    res.send(updatedFlav);
+    const { rows: [ updatedFlavor] } = await updateFlav(id, flavorName, is_favorite);
+    res.send(updatedFlavor);
   } catch (err){
     next(err);
   }

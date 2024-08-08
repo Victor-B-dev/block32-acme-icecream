@@ -2,11 +2,12 @@ const client = require('./client.cjs');
 
 const createFlavor = async(name, isfav) => {
   try {
-    await client.query(`
+    const createdFlav = await client.query(`
       INSERT INTO flavors (name, isfav)
       VALUES ($1, $2)
       RETURNING *;
     `, [name, isfav]);
+    return createdFlav
   } catch(err) {
     console.log(err);
   }
@@ -50,12 +51,14 @@ const deleteFlavor = async(id) => {
 
 const updateFlav = async (id, flavorName, isfav) => {
   try{
-    await client.query(`
+    const updatedFlav = await client.query(`
       UPDATE flavors
       SET name='${flavorName}',
           isfav='${isfav}'
-      WHERE id='${id}';
+      WHERE id='${id}'
+      RETURNING *;
       `);
+    return updatedFlav
   } catch (err){
     console.log(err)
   }
